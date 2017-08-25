@@ -21,6 +21,11 @@ class User < ApplicationRecord
   validates :session_token, uniqueness: true, presence: true
   validates :password, length: { in: (6..20), message: "Password must be 6 to 20 characters long." }
 
+  has_many :cats,
+    primary_key: :id,
+    foreign_key: :user_id,
+    class_name: :Cat
+
   def reset_session_token!
     self.session_token = SecureRandom.urlsafe_base64
     self.save
